@@ -1,0 +1,12 @@
+{
+    "name": "ilo3",
+    "meta": {
+        "vendor": "HP"
+    },
+    "rules": {
+            "headers": {
+                "server": ["Allegro-Software-RomPager"]
+            }
+    },
+    "plugins": ["ilo3"]
+}

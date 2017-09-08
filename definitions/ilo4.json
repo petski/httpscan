@@ -1,0 +1,13 @@
+{
+    "name": "ilo4",
+    "meta": {
+        "vendor": "HP",
+        "class": "iLO 4"
+    },
+    "rules": {
+            "headers": {
+                "server": ["HP-iLO-Server"]
+            }
+    },
+    "plugins": ["ilo4"]
+}
