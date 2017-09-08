@@ -41,6 +41,9 @@ if __name__ == '__main__':
     parser.add_argument('--fast', help='Change timeout settings for the scanner in order to scan faster (T5).', default=False, action='store_true')
     parser.add_argument('--definitions-create', help='Create a definition for a given host', default=False, action='store_true')
     parser.add_argument('--port', help='Port to be scanned (default: 80)', type=str, default=PORT)
+    parser.add_argument('--allow-redirects', dest='allow_redirects', action='store_true')
+    parser.add_argument('--no-allow-redirects', dest='allow_redirects', action='store_false')
+    parser.set_defaults(allow_redirects=True)
     parser.add_argument('--debug', help='Show additionalinformation in the logs', action='store_true', default=False)
     args = parser.parse_args()
 
@@ -54,9 +57,9 @@ if __name__ == '__main__':
     if args.definitions_create:
         url = 'http://{host}:{port}/'.format(host=args.hosts, port=args.port)
         try:
-            response = requests.get(url, timeout=5, verify=False)
+            response = requests.get(url, timeout=5, verify=False, allow_redirects=args.allow_redirects)
         except (requests.exceptions.RequestException, requests.exceptions.SSLError) as e:
-            log.debug('{url} request error: {exc}'.format(url=url, exc=e))
+            log.debug('{url} request error: {ename} {eargs!r}'.format(url=url, ename=type(e).__name__, eargs=e.args))
             exit()
 
         valid_charcters = string.ascii_lowercase + string.digits
@@ -120,12 +123,9 @@ if __name__ == '__main__':
         # Make HTTP request
         url = 'http://{host}:{port}/'.format(host=host, port=port)
         try:
-            response = requests.get(url, timeout=5, verify=False)
+            response = requests.get(url, timeout=5, verify=False, allow_redirects=args.allow_redirects)
         except (requests.exceptions.RequestException, requests.exceptions.SSLError) as e:
-            log.debug('{url} request error: {exc}'.format(
-                url=url,
-                exc=e
-            ))
+            log.debug('{url} request error: {ename} {eargs!r}'.format(url=url, ename=type(e).__name__, eargs=e.args))
             continue
 
         identity = None
