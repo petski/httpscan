@@ -6,7 +6,7 @@
     },
     "rules": {
             "headers": {
-                "server": ["HP-iLO-Server"]
+                "server": ["HP-iLO-Server", "HPE-iLO-Server"]
             }
     },
     "plugins": ["ilo4"]
